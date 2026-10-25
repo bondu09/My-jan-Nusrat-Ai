@@ -1,0 +1,6 @@
+{
+  "name": "NUSRAT AI",
+  "description": "Production-Ready NUSRAT AI Voice Assistant with Mark 85 Arc Core HUD, hands-free automation, and voice intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
