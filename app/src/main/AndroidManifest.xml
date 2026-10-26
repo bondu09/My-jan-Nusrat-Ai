@@ -87,6 +87,12 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.setup.SetupActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.settings.OverlayAvatarActivity"
             android:exported="true"
             android:screenOrientation="portrait" />

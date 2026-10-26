@@ -108,9 +108,13 @@ class SettingsFragment : Fragment() {
         // Silent Execution Mode
         binding.switchSilentMode.isChecked = preferences.isSilentExecutionMode
 
-        // Model
+        // Model & Multi-API status
         val modelDisplay = preferences.aiModel.removePrefix("models/")
-        binding.tvCurrentModel.text = "$modelDisplay • Live WebSocket"
+        val extras = mutableListOf<String>()
+        if (preferences.openAiApiKey.isNotBlank()) extras.add("OpenAI")
+        if (preferences.elevenLabsApiKey.isNotBlank()) extras.add("ElevenLabs")
+        val extrasText = if (extras.isNotEmpty()) " • " + extras.joinToString(" + ") else " • Live Engine"
+        binding.tvCurrentModel.text = "$modelDisplay$extrasText"
 
         // Theme
         binding.tvCurrentTheme.text = when (preferences.appTheme) {

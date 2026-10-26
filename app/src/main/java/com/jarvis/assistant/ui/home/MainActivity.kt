@@ -147,6 +147,13 @@ class MainActivity : AppCompatActivity() {
         appliedThemeKey = prefs.appTheme
         appliedCustomHex = prefs.customThemeColor
         super.onCreate(savedInstanceState)
+
+        if (!prefs.isSetupCompleted || prefs.apiKey.isBlank() || !prefs.isAgreementAccepted) {
+            startActivity(Intent(this, com.jarvis.assistant.ui.setup.SetupActivity::class.java))
+            finish()
+            return
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

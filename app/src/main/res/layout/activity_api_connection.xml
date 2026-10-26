@@ -38,8 +38,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="API &amp; Connection"
-                android:textColor="@color/text_primary"
+                android:text="AI APIs &amp; Models"
+                android:textColor="?attr/themeTextPrimary"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold" />
@@ -47,8 +47,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gemini Live WebSocket &amp; Engine"
-                android:textColor="@color/text_muted"
+                android:text="Gemini Live • OpenAI • ElevenLabs"
+                android:textColor="?attr/themeTextMuted"
                 android:textSize="12sp"
                 android:fontFamily="sans-serif" />
         </LinearLayout>
@@ -70,20 +70,55 @@
             android:paddingTop="8dp"
             android:paddingBottom="24dp">
 
-            <!-- Card 1: Connection Status Card -->
+            <!-- ============================================== -->
+            <!-- 1. GOOGLE GEMINI API (LIVE & MODEL) -->
+            <!-- ============================================== -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="১. Google Gemini API"
+                android:textColor="?attr/themeAccent"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_jarvis_card"
-                android:padding="18dp"
+                android:padding="16dp"
                 android:layout_marginBottom="18dp">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• কাজ: এটি একটি শক্তিশালী মডেল যা টেক্সট, ছবি এবং কোড বুঝতে পারে।"
+                    android:textColor="?attr/themeTextPrimary"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/btnOpenGeminiStudioLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="• লিংক: https://aistudio.google.com/ ↗"
+                    android:textColor="?attr/themeAccent"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Status Dot & Latency -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_jarvis_row_item"
+                    android:padding="10dp"
+                    android:layout_marginTop="12dp">
 
                     <View
                         android:id="@+id/viewStatusDot"
@@ -98,10 +133,9 @@
                         android:layout_height="wrap_content"
                         android:text="ONLINE • READY"
                         android:textColor="?attr/themeTextPrimary"
-                        android:textSize="13sp"
+                        android:textSize="12.5sp"
                         android:fontFamily="sans-serif-medium"
                         android:textStyle="bold"
-                        android:letterSpacing="0.06"
                         android:layout_marginStart="8dp" />
 
                     <View
@@ -120,71 +154,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvEndpointSummary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wss://generativelanguage.googleapis.com (Gemini 2.0 Live Protocol)"
-                    android:textColor="?attr/themeTextMuted"
-                    android:textSize="12sp"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginTop="8dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTestConnection"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    app:strokeColor="?attr/themeAccent"
-                    app:strokeWidth="1dp"
-                    android:text="Test Connection &amp; Latency"
-                    android:textColor="?attr/themeAccent"
-                    android:textSize="12sp"
-                    android:textAllCaps="false"
-                    android:fontFamily="sans-serif-medium"
-                    android:layout_marginTop="12dp"
-                    app:icon="@drawable/ic_settings_wave"
-                    app:iconSize="16dp"
-                    app:iconTint="?attr/themeAccent" />
-            </LinearLayout>
-
-            <!-- Card 2: Gemini API Key -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="API Credentials"
-                android:textColor="?attr/themeTextMuted"
-                android:textSize="13sp"
-                android:fontFamily="sans-serif-medium"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/bg_jarvis_card"
-                android:padding="18dp"
-                android:layout_marginBottom="18dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gemini API Key"
-                    android:textColor="?attr/themeTextPrimary"
-                    android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Direct authorization key from Google AI Studio"
-                    android:textColor="?attr/themeTextMuted"
-                    android:textSize="12sp"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginTop="2dp" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilApiKey"
                     android:layout_width="match_parent"
@@ -202,32 +171,31 @@
                         android:id="@+id/etApiKey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="AIzaSy..."
+                        android:hint="Gemini API Key (AIzaSy...)"
                         android:inputType="textPassword"
                         android:textColor="?attr/themeTextPrimary"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnPasteKey"
                         style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="38dp"
+                        android:layout_weight="1"
                         app:strokeColor="?attr/themeAccent"
-                        app:strokeWidth="1dp"
-                        android:text="Paste Clipboard"
+                        android:text="পেস্ট করুন"
                         android:textColor="?attr/themeAccent"
                         android:textSize="12sp"
                         android:textAllCaps="false"
-                        android:fontFamily="sans-serif-medium"
-                        android:layout_marginEnd="8dp" />
+                        android:layout_marginEnd="6dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnClearKey"
@@ -235,86 +203,100 @@
                         android:layout_width="wrap_content"
                         android:layout_height="38dp"
                         app:strokeColor="?attr/themeTextMuted"
-                        app:strokeWidth="1dp"
-                        android:text="Clear"
+                        android:text="মুছুন"
                         android:textColor="?attr/themeTextMuted"
                         android:textSize="12sp"
                         android:textAllCaps="false"
-                        android:fontFamily="sans-serif-medium" />
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTestConnection"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:text="টেস্ট"
+                        android:textSize="12sp"
+                        android:textAllCaps="false" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gemini Model Engine:"
+                    android:textColor="?attr/themeTextMuted"
+                    android:textSize="12sp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgModelGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rbModelFlashThinking"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gemini-3.1-flash (Ultra-Low Latency Live • Recommended)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbModelFlash20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gemini-3.8-live (Flagship Conversational Intelligence)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbModelFlash15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gemini-3.1-flash-agent (Autonomous Agent)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tvEndpointSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="wss://generativelanguage.googleapis.com (Gemini Live Protocol)"
+                    android:textColor="?attr/themeTextMuted"
+                    android:textSize="11sp"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxStrokeColor="?attr/themeAccent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCustomEndpoint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Custom WebSocket Gateway (ঐচ্ছিক)"
+                        android:inputType="textUri"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <!-- Card 3: AI Model Engine -->
+            <!-- ============================================== -->
+            <!-- 2. OPENAI API (CHATGPT) -->
+            <!-- ============================================== -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Model Engine"
-                android:textColor="?attr/themeTextMuted"
-                android:textSize="13sp"
-                android:fontFamily="sans-serif-medium"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <RadioGroup
-                android:id="@+id/rgModelGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_jarvis_card"
-                android:padding="14dp"
-                android:layout_marginBottom="18dp">
-
-                <RadioButton
-                    android:id="@+id/rbModelFlashThinking"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="gemini-3.1-flash (Ultra-Low Latency Live • ~700ms Recommended)"
-                    android:textColor="?attr/themeTextPrimary"
-                    android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?attr/themeCardBorder" />
-
-                <RadioButton
-                    android:id="@+id/rbModelFlash20"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="gemini-3.8-live (Flagship Conversational Intelligence)"
-                    android:textColor="?attr/themeTextPrimary"
-                    android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp" />
-
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?attr/themeCardBorder" />
-
-                <RadioButton
-                    android:id="@+id/rbModelFlash15"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="gemini-3.1-flash (Balanced Multi-Model Autonomous Agent)"
-                    android:textColor="?attr/themeTextPrimary"
-                    android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp" />
-            </RadioGroup>
-
-            <!-- Card 4: Custom WebSocket Endpoint -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Custom Endpoint (Optional)"
-                android:textColor="?attr/themeTextMuted"
+                android:text="২. OpenAI API (ChatGPT)"
+                android:textColor="?attr/themeAccent"
                 android:textSize="13sp"
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
@@ -325,26 +307,71 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/bg_jarvis_card"
-                android:padding="18dp"
-                android:layout_marginBottom="24dp">
+                android:padding="16dp"
+                android:layout_marginBottom="18dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Custom Gateway URL"
+                    android:text="• কাজ: এটি চ্যাট, কোড জেনারেশন এবং অন্যান্য টেক্সট-ভিত্তিক কাজের জন্য দারুণ সাহায্য করে।"
                     android:textColor="?attr/themeTextPrimary"
-                    android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <TextView
+                    android:id="@+id/btnOpenOpenAiPlatformLink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Override standard Google endpoint with your proxy or relay (leave empty for default)"
-                    android:textColor="?attr/themeTextMuted"
+                    android:layout_marginTop="4dp"
+                    android:text="• লিংক: https://platform.openai.com/ ↗"
+                    android:textColor="?attr/themeAccent"
                     android:textSize="12sp"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginTop="2dp" />
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Status Dot & Latency -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_jarvis_row_item"
+                    android:padding="10dp"
+                    android:layout_marginTop="12dp">
+
+                    <View
+                        android:id="@+id/viewOpenAiStatusDot"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/bg_jarvis_mic_center"
+                        android:backgroundTint="#94A3B8" />
+
+                    <TextView
+                        android:id="@+id/tvOpenAiLiveStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OPTIONAL • KEY NOT SET"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvOpenAiPingResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ping: -- ms"
+                        android:textColor="?attr/themeAccent"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -355,18 +382,351 @@
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="?attr/themeAccent"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOpenAiApiKey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="OpenAI API Key (sk-proj-...)"
+                        android:inputType="textPassword"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPasteOpenAiKey"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        app:strokeColor="?attr/themeAccent"
+                        android:text="পেস্ট করুন"
+                        android:textColor="?attr/themeAccent"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClearOpenAiKey"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        app:strokeColor="?attr/themeTextMuted"
+                        android:text="মুছুন"
+                        android:textColor="?attr/themeTextMuted"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTestOpenAiConnection"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:text="টেস্ট"
+                        android:textSize="12sp"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OpenAI Model Engine:"
+                    android:textColor="?attr/themeTextMuted"
+                    android:textSize="12sp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgOpenAiModelGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rbOpenAiGpt4oMini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gpt-4o-mini (Fast &amp; Cost Efficient • Recommended)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbOpenAiGpt4o"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="gpt-4o (High Intelligence Multimodal Flagship)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- 3. ELEVENLABS API -->
+            <!-- ============================================== -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="৩. ElevenLabs API"
+                android:textColor="?attr/themeAccent"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_jarvis_card"
+                android:padding="16dp"
+                android:layout_marginBottom="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• কাজ: এটি মানুষের মতো ভয়েস তৈরি করতে সাহায্য করে।"
+                    android:textColor="?attr/themeTextPrimary"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/btnOpenElevenLabsLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="• লিংক: https://elevenlabs.io/ ↗"
+                    android:textColor="?attr/themeAccent"
+                    android:textSize="12sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Status Dot & Latency -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_jarvis_row_item"
+                    android:padding="10dp"
+                    android:layout_marginTop="12dp">
+
+                    <View
+                        android:id="@+id/viewElevenLabsStatusDot"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/bg_jarvis_mic_center"
+                        android:backgroundTint="#94A3B8" />
+
+                    <TextView
+                        android:id="@+id/tvElevenLabsLiveStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OPTIONAL • KEY NOT SET"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvElevenLabsPingResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ping: -- ms"
+                        android:textColor="?attr/themeAccent"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeColor="?attr/themeAccent"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etElevenLabsApiKey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="ElevenLabs API Key"
+                        android:inputType="textPassword"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPasteElevenLabsKey"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        app:strokeColor="?attr/themeAccent"
+                        android:text="পেস্ট করুন"
+                        android:textColor="?attr/themeAccent"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnClearElevenLabsKey"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        app:strokeColor="?attr/themeTextMuted"
+                        android:text="মুছুন"
+                        android:textColor="?attr/themeTextMuted"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTestElevenLabsConnection"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:text="টেস্ট"
+                        android:textSize="12sp"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusBottomEnd="10dp"
                     app:boxStrokeColor="?attr/themeAccent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCustomEndpoint"
+                        android:id="@+id/etElevenLabsVoiceId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="wss://your-gateway.com/live"
-                        android:inputType="textUri"
+                        android:hint="Voice ID (ডিফল্ট: Rachel - 21m00Tcm4TlvDq8ikWAM)"
                         android:textColor="?attr/themeTextPrimary"
-                        android:textSize="14sp"
-                        android:fontFamily="sans-serif" />
+                        android:textSize="12.5sp" />
                 </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- ============================================== -->
+            <!-- 4. ACTIVE ENGINES SELECTION -->
+            <!-- ============================================== -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="৪. সক্রিয় ইঞ্জিন কনফিগারেশন"
+                android:textColor="?attr/themeAccent"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_jarvis_card"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="প্রধান AI ব্রেইন ইঞ্জিন (Primary AI Engine):"
+                    android:textColor="?attr/themeTextPrimary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgActiveAiEngine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/rbEngineGemini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Google Gemini Live (রিয়েল-টাইম বাই-ডিরেকশনাল লাইভ ভয়েস)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbEngineOpenAi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="OpenAI ChatGPT (টেক্সট ও হাই-কোয়ালিটি রেসপন্স)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="?attr/themeCardBorder" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ভয়েস আউটপুট ইঞ্জিন (Voice Output Engine):"
+                    android:textColor="?attr/themeTextPrimary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgActiveTtsEngine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/rbTtsGeminiLive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gemini Live নেটিভ ভয়েস (আল্ট্রা-ফাস্ট স্ট্রিম)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbTtsElevenLabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ElevenLabs মানুষের মতো প্রাকৃতিক কণ্ঠ (Neural Voice)"
+                        android:textColor="?attr/themeTextPrimary"
+                        android:textSize="12.5sp" />
+                </RadioGroup>
             </LinearLayout>
 
         </LinearLayout>
@@ -390,7 +750,7 @@
             android:layout_height="54dp"
             android:background="@drawable/bg_jarvis_pill_button"
             app:backgroundTint="@null"
-            android:text="Save &amp; Apply Configuration"
+            android:text="Save &amp; Apply All Configuration"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold"

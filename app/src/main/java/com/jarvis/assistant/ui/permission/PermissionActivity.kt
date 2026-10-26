@@ -1,6 +1,7 @@
 package com.jarvis.assistant.ui.permission
 
 import android.Manifest
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -55,6 +56,9 @@ class PermissionActivity : AppCompatActivity() {
         ThemeManager.applyDynamicBackground(binding.root)
 
         binding.btnBack.setOnClickListener {
+            if (intent.getBooleanExtra("FROM_SETUP", false)) {
+                startActivity(Intent(this, com.jarvis.assistant.ui.home.MainActivity::class.java))
+            }
             finish()
         }
         addExtraPermissionCards()
@@ -130,13 +134,26 @@ class PermissionActivity : AppCompatActivity() {
         updateExtraPermission("brightness", PermissionHelper.hasWriteSettingsPermission(this))
 
         if (hasMic && hasLoc && hasNotif && hasA11y) {
-            binding.btnGrantAll.text = "ALL ESSENTIAL PERMISSIONS GRANTED ✓"
-            binding.btnGrantAll.alpha = 0.7f
-            binding.btnGrantAll.isEnabled = false
+            if (intent.getBooleanExtra("FROM_SETUP", false)) {
+                binding.btnGrantAll.text = "সকল পারমিশন প্রস্তুত • NUSRAT AI শুরু করুন ➔"
+                binding.btnGrantAll.alpha = 1.0f
+                binding.btnGrantAll.isEnabled = true
+                binding.btnGrantAll.setOnClickListener {
+                    startActivity(Intent(this, com.jarvis.assistant.ui.home.MainActivity::class.java))
+                    finish()
+                }
+            } else {
+                binding.btnGrantAll.text = "ALL ESSENTIAL PERMISSIONS GRANTED ✓"
+                binding.btnGrantAll.alpha = 0.7f
+                binding.btnGrantAll.isEnabled = false
+            }
         } else {
             binding.btnGrantAll.text = "GRANT ALL PERMISSIONS"
             binding.btnGrantAll.alpha = 1.0f
             binding.btnGrantAll.isEnabled = true
+            binding.btnGrantAll.setOnClickListener {
+                requestAllMissingPermissions()
+            }
         }
     }
 

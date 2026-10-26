@@ -54,19 +54,31 @@ class HandsFreeActivity : AppCompatActivity() {
         }
 
         binding.btnHandsFreeOfficialTelegram.setOnClickListener {
-            openUrl("https://t.me/+sYana61LvHdmZmE1")
+            openUrl("https://t.me/softwarebdofficial")
         }
 
         binding.btnHandsFreeDiscussion.setOnClickListener {
-            openUrl("https://t.me/+DmyO7NFUia01YTVl")
+            openUrl("https://t.me/softwarebdofficial")
         }
 
         binding.btnHandsFreeInstagram.setOnClickListener {
-            openUrl("https://www.instagram.com/techgptx.ai")
+            openUrl("https://www.instagram.com/r.love.apon")
+        }
+
+        binding.btnHandsFreeYoutube.setOnClickListener {
+            openUrl("https://youtube.com/@garenaofficialaccountbd10?si=pLFngov25hy1vb5Z")
+        }
+
+        binding.btnHandsFreeWhatsapp.setOnClickListener {
+            openUrl("https://wa.me/8801905872064")
+        }
+
+        binding.btnHandsFreeFacebook.setOnClickListener {
+            openUrl("https://www.facebook.com/profile.php?id=61595544485066")
         }
 
         binding.tvFooterHandsFree.setOnClickListener {
-            openUrl("https://t.me/+sYana61LvHdmZmE1")
+            openUrl("https://t.me/softwarebdofficial")
         }
     }
 

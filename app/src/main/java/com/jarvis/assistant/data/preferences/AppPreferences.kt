@@ -56,7 +56,23 @@ class AppPreferences(context: Context) {
         private const val KEY_ORB_SCALE = "key_orb_scale"
         private const val KEY_ORB_HUE = "key_orb_hue"
         private const val KEY_CUSTOM_ENDPOINT = "key_custom_endpoint"
+        private const val KEY_SETUP_COMPLETED = "key_setup_completed"
+        private const val KEY_AGREEMENT_ACCEPTED = "key_agreement_accepted"
+        private const val KEY_OPENAI_API_KEY = "key_openai_api_key"
+        private const val KEY_OPENAI_MODEL = "key_openai_model"
+        private const val KEY_ELEVENLABS_API_KEY = "key_elevenlabs_api_key"
+        private const val KEY_ELEVENLABS_VOICE_ID = "key_elevenlabs_voice_id"
+        private const val KEY_ACTIVE_AI_ENGINE = "key_active_ai_engine"
+        private const val KEY_ACTIVE_TTS_ENGINE = "key_active_tts_engine"
     }
+
+    var isSetupCompleted: Boolean
+        get() = prefs.getBoolean(KEY_SETUP_COMPLETED, false)
+        set(value) = prefs.edit().putBoolean(KEY_SETUP_COMPLETED, value).apply()
+
+    var isAgreementAccepted: Boolean
+        get() = prefs.getBoolean(KEY_AGREEMENT_ACCEPTED, false)
+        set(value) = prefs.edit().putBoolean(KEY_AGREEMENT_ACCEPTED, value).apply()
 
     var isOwnerVoiceEnabled: Boolean
         get() = prefs.getBoolean(KEY_OWNER_VOICE_ENABLED, false)
@@ -152,6 +168,30 @@ class AppPreferences(context: Context) {
     var apiKey: String
         get() = prefs.getString(KEY_API_KEY, "")?.trim() ?: ""
         set(value) = prefs.edit().putString(KEY_API_KEY, value.trim()).apply()
+
+    var openAiApiKey: String
+        get() = prefs.getString(KEY_OPENAI_API_KEY, "")?.trim() ?: ""
+        set(value) = prefs.edit().putString(KEY_OPENAI_API_KEY, value.trim()).apply()
+
+    var openAiModel: String
+        get() = prefs.getString(KEY_OPENAI_MODEL, "gpt-4o-mini") ?: "gpt-4o-mini"
+        set(value) = prefs.edit().putString(KEY_OPENAI_MODEL, value.trim()).apply()
+
+    var elevenLabsApiKey: String
+        get() = prefs.getString(KEY_ELEVENLABS_API_KEY, "")?.trim() ?: ""
+        set(value) = prefs.edit().putString(KEY_ELEVENLABS_API_KEY, value.trim()).apply()
+
+    var elevenLabsVoiceId: String
+        get() = prefs.getString(KEY_ELEVENLABS_VOICE_ID, "21m00Tcm4TlvDq8ikWAM") ?: "21m00Tcm4TlvDq8ikWAM"
+        set(value) = prefs.edit().putString(KEY_ELEVENLABS_VOICE_ID, value.trim()).apply()
+
+    var activeAiEngine: String
+        get() = prefs.getString(KEY_ACTIVE_AI_ENGINE, "GEMINI") ?: "GEMINI"
+        set(value) = prefs.edit().putString(KEY_ACTIVE_AI_ENGINE, value.trim()).apply()
+
+    var activeTtsEngine: String
+        get() = prefs.getString(KEY_ACTIVE_TTS_ENGINE, "GEMINI_LIVE") ?: "GEMINI_LIVE"
+        set(value) = prefs.edit().putString(KEY_ACTIVE_TTS_ENGINE, value.trim()).apply()
 
     var aiModel: String
         get() {

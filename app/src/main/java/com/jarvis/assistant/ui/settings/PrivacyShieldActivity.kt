@@ -23,19 +23,27 @@ class PrivacyShieldActivity : AppCompatActivity() {
         }
 
         binding.btnJoinOfficialTelegram.setOnClickListener {
-            openUrl("https://t.me/+sYana61LvHdmZmE1")
+            openUrl("https://t.me/softwarebdofficial")
         }
 
         binding.btnJoinTelegram.setOnClickListener {
-            openUrl("https://t.me/+DmyO7NFUia01YTVl")
+            openUrl("https://t.me/softwarebdofficial")
         }
 
         binding.btnJoinInstagram.setOnClickListener {
-            openUrl("https://www.instagram.com/techgptx.ai")
+            openUrl("https://www.instagram.com/r.love.apon")
         }
 
         binding.btnJoinYoutube.setOnClickListener {
-            openUrl("https://youtube.com/@TechGptX")
+            openUrl("https://youtube.com/@garenaofficialaccountbd10?si=pLFngov25hy1vb5Z")
+        }
+
+        binding.btnJoinWhatsapp.setOnClickListener {
+            openUrl("https://wa.me/8801905872064")
+        }
+
+        binding.btnJoinFacebook.setOnClickListener {
+            openUrl("https://www.facebook.com/profile.php?id=61595544485066")
         }
     }
 
