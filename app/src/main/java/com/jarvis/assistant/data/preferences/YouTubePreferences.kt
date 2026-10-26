@@ -33,7 +33,16 @@ class YouTubePreferences(context: Context) {
     }
 
     var youtubeApiKey: String
-        get() = prefs.getString(KEY_YOUTUBE_API_KEY, "") ?: ""
+        get() {
+            val stored = prefs.getString(KEY_YOUTUBE_API_KEY, "") ?: ""
+            if (stored.isNotBlank()) return stored
+            return try {
+                val buildKey = com.jarvis.assistant.BuildConfig.YOUTUBE_API_KEY.trim()
+                if (buildKey.isNotBlank() && buildKey != "your_api_key_here") buildKey else ""
+            } catch (_: Throwable) {
+                ""
+            }
+        }
         set(value) = prefs.edit().putString(KEY_YOUTUBE_API_KEY, value.trim()).apply()
 
     var isYouTubeEnabled: Boolean

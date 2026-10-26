@@ -166,11 +166,29 @@ class AppPreferences(context: Context) {
     }
 
     var apiKey: String
-        get() = prefs.getString(KEY_API_KEY, "")?.trim() ?: ""
+        get() {
+            val stored = prefs.getString(KEY_API_KEY, "")?.trim() ?: ""
+            if (stored.isNotBlank()) return stored
+            return try {
+                val buildKey = com.jarvis.assistant.BuildConfig.GEMINI_API_KEY.trim()
+                if (buildKey.isNotBlank() && buildKey != "your_api_key_here") buildKey else ""
+            } catch (_: Throwable) {
+                ""
+            }
+        }
         set(value) = prefs.edit().putString(KEY_API_KEY, value.trim()).apply()
 
     var openAiApiKey: String
-        get() = prefs.getString(KEY_OPENAI_API_KEY, "")?.trim() ?: ""
+        get() {
+            val stored = prefs.getString(KEY_OPENAI_API_KEY, "")?.trim() ?: ""
+            if (stored.isNotBlank()) return stored
+            return try {
+                val buildKey = com.jarvis.assistant.BuildConfig.OPENAI_API_KEY.trim()
+                if (buildKey.isNotBlank() && buildKey != "your_api_key_here") buildKey else ""
+            } catch (_: Throwable) {
+                ""
+            }
+        }
         set(value) = prefs.edit().putString(KEY_OPENAI_API_KEY, value.trim()).apply()
 
     var openAiModel: String
@@ -178,7 +196,16 @@ class AppPreferences(context: Context) {
         set(value) = prefs.edit().putString(KEY_OPENAI_MODEL, value.trim()).apply()
 
     var elevenLabsApiKey: String
-        get() = prefs.getString(KEY_ELEVENLABS_API_KEY, "")?.trim() ?: ""
+        get() {
+            val stored = prefs.getString(KEY_ELEVENLABS_API_KEY, "")?.trim() ?: ""
+            if (stored.isNotBlank()) return stored
+            return try {
+                val buildKey = com.jarvis.assistant.BuildConfig.ELEVENLABS_API_KEY.trim()
+                if (buildKey.isNotBlank() && buildKey != "your_api_key_here") buildKey else ""
+            } catch (_: Throwable) {
+                ""
+            }
+        }
         set(value) = prefs.edit().putString(KEY_ELEVENLABS_API_KEY, value.trim()).apply()
 
     var elevenLabsVoiceId: String

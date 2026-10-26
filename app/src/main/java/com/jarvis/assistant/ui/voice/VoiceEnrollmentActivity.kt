@@ -85,7 +85,12 @@ class VoiceEnrollmentActivity : AppCompatActivity() {
         binding.switchOwnerOnly.isChecked = isEnabled
         binding.switchOwnerOnly.isEnabled = hasProfile
 
-        if (hasProfile) {
+        if (!VoskModelManager.isSpeakerModelAvailable && !hasProfile) {
+            binding.tvEnrollmentStatus.text = "VOICE ENGINE: CLOUD ACTIVE"
+            binding.tvEnrollmentStatus.setTextColor(getColor(R.color.primary_cyan))
+            binding.tvStatusDescription.text = "Nusrat is running with cloud AI voice intelligence. Offline speaker gating models are not packaged in this build."
+            binding.switchOwnerOnly.isEnabled = false
+        } else if (hasProfile) {
             binding.tvEnrollmentStatus.text = if (isEnabled) "OWNER VOICE: ACTIVE" else "OWNER VOICE: PAUSED"
             binding.tvEnrollmentStatus.setTextColor(getColor(if (isEnabled) R.color.primary_cyan else R.color.text_secondary))
             binding.tvStatusDescription.text = "Jarvis is calibrated to your voice. Any speech or commands from other people are automatically blocked."
@@ -191,6 +196,10 @@ class VoiceEnrollmentActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun startRecordingSample() {
+        if (!VoskModelManager.isSpeakerModelAvailable) {
+            Toast.makeText(this, "Offline speaker recognition model is not packaged in this build.", Toast.LENGTH_LONG).show()
+            return
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             checkPermissions()
             return
@@ -260,6 +269,10 @@ class VoiceEnrollmentActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun startTestingVoice() {
+        if (!VoskModelManager.isSpeakerModelAvailable) {
+            Toast.makeText(this, "Offline speaker recognition model is not packaged in this build.", Toast.LENGTH_LONG).show()
+            return
+        }
         if (!preferences.hasOwnerVoiceProfile()) {
             Toast.makeText(this, "Please enroll your voice samples first!", Toast.LENGTH_SHORT).show()
             return

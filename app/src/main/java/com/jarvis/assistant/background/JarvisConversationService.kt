@@ -33,6 +33,9 @@ import org.json.JSONObject
 import org.vosk.Recognizer
 import org.vosk.android.RecognitionListener as VoskRecognitionListener
 import org.vosk.android.SpeechService
+import android.speech.RecognitionListener as SystemRecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import com.jarvis.assistant.audio.AudioPlayer
 import com.jarvis.assistant.audio.AudioRecorder
 import com.jarvis.assistant.data.model.ConversationState
@@ -479,8 +482,9 @@ class JarvisConversationService : Service() {
         return com.jarvis.assistant.vision.ScreenCaptureManager.getInstance().isSharing.value && ws.isSessionReady()
     }
 
-    // --- Standby / wake-word components (Pure Vosk) ---
+    // --- Standby / wake-word components (Pure Vosk or System Fallback) ---
     private var voskSpeechService: SpeechService? = null
+    private var systemSpeechRecognizer: SpeechRecognizer? = null
     private var tts: TextToSpeech? = null
     private var wakeLock: PowerManager.WakeLock? = null
     private var wifiLock: android.net.wifi.WifiManager.WifiLock? = null
@@ -2948,24 +2952,31 @@ class JarvisConversationService : Service() {
             Log.e("JarvisService", "Error stopping Vosk SpeechService: ${e.message}")
         }
         voskSpeechService = null
+        stopSystemWakeListening()
     }
 
     private fun startWakeListening() {
         if (!_isStandby.value) return
-        if (voskSpeechService != null) return
+        if (voskSpeechService != null || systemSpeechRecognizer != null) return
 
         val model = VoskModelManager.model
         if (model == null) {
-            Log.i("JarvisService", "Vosk model still loading; triggering init and will start once ready")
-            VoskModelManager.init(applicationContext, serviceScope)
-            serviceScope.launch {
-                VoskModelManager.isModelReady.collect { ready ->
-                    if (ready && _isStandby.value && voskSpeechService == null) {
-                        startWakeListening()
+            if (VoskModelManager.isModelAvailable) {
+                Log.i("JarvisService", "Vosk model still loading; triggering init and will start once ready")
+                VoskModelManager.init(applicationContext, serviceScope)
+                serviceScope.launch {
+                    VoskModelManager.isModelReady.collect { ready ->
+                        if (ready && _isStandby.value && voskSpeechService == null) {
+                            startWakeListening()
+                        }
                     }
                 }
+                return
+            } else {
+                Log.i("JarvisService", "Vosk offline model not packaged; using Android system recognizer fallback")
+                startSystemWakeListening()
+                return
             }
-            return
         }
 
         try {
@@ -3207,6 +3218,93 @@ class JarvisConversationService : Service() {
         hasSignalledUtteranceEnd = false
         serviceScope.launch { _wakeEvents.emit(Unit) }
         beginActiveConversation(wakeTriggered = true)
+    }
+
+    private fun startSystemWakeListening() {
+        if (!_isStandby.value) return
+        serviceScope.launch(Dispatchers.Main) {
+            try {
+                if (systemSpeechRecognizer == null) {
+                    if (!SpeechRecognizer.isRecognitionAvailable(applicationContext)) {
+                        Log.w("JarvisService", "System speech recognition not available on this device")
+                        return@launch
+                    }
+                    systemSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(applicationContext).apply {
+                        setRecognitionListener(object : SystemRecognitionListener {
+                            override fun onReadyForSpeech(params: Bundle?) {}
+                            override fun onBeginningOfSpeech() {}
+                            override fun onRmsChanged(rmsdB: Float) {}
+                            override fun onBufferReceived(buffer: ByteArray?) {}
+                            override fun onEndOfSpeech() {}
+                            override fun onError(error: Int) {
+                                if (_isStandby.value) {
+                                    serviceScope.launch(Dispatchers.Main) {
+                                        delay(1500)
+                                        if (_isStandby.value && systemSpeechRecognizer != null) {
+                                            restartSystemWakeListening()
+                                        }
+                                    }
+                                }
+                            }
+                            override fun onResults(results: Bundle?) {
+                                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                                val handled = checkSystemWakeMatches(matches)
+                                if (!handled && _isStandby.value) {
+                                    restartSystemWakeListening()
+                                }
+                            }
+                            override fun onPartialResults(partialResults: Bundle?) {
+                                val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                                checkSystemWakeMatches(matches)
+                            }
+                            override fun onEvent(eventType: Int, params: Bundle?) {}
+                        })
+                    }
+                }
+                restartSystemWakeListening()
+            } catch (e: Exception) {
+                Log.e("JarvisService", "Failed to start System SpeechRecognizer: ${e.message}")
+            }
+        }
+    }
+
+    private fun restartSystemWakeListening() {
+        if (!_isStandby.value) return
+        try {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+                putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
+            }
+            systemSpeechRecognizer?.startListening(intent)
+        } catch (e: Exception) {
+            Log.e("JarvisService", "Error in restartSystemWakeListening: ${e.message}")
+        }
+    }
+
+    private fun stopSystemWakeListening() {
+        try {
+            systemSpeechRecognizer?.stopListening()
+            systemSpeechRecognizer?.destroy()
+        } catch (e: Exception) {
+            Log.e("JarvisService", "Error stopping System SpeechRecognizer: ${e.message}")
+        }
+        systemSpeechRecognizer = null
+    }
+
+    private fun checkSystemWakeMatches(matches: List<String>?): Boolean {
+        if (!_isStandby.value || matches.isNullOrEmpty()) return false
+        for (candidate in matches) {
+            val lower = candidate.lowercase(Locale.ROOT)
+            val matched = VALID_WAKE_PHRASES.any { lower.contains(it) } ||
+                    lower.contains("nusrat") || lower.contains("jarvis")
+            if (matched) {
+                Log.i("JarvisService", "Wake phrase detected via system recognizer: $lower")
+                onWakeWordDetected()
+                return true
+            }
+        }
+        return false
     }
 
     private fun vibrateBriefly() {
