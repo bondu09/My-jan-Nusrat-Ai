@@ -93,11 +93,22 @@ class ChatFragment : Fragment() {
         val text = binding.etMessageInput.text?.toString()?.trim() ?: ""
         if (text.isBlank()) return
 
-        if (!JarvisConversationService.isServiceRunning()) {
-            (activity as? MainActivity)?.handleMicOrOrbClick()
-        }
+        val repository = JarvisApp.instance.chatRepository
+        repository.addTurn(text, "") // Add user message immediately
 
-        JarvisConversationService.sendTextMessage(text)
+        if (JarvisConversationService.isSessionOn.value && JarvisConversationService.connectionStatus.value == "LIVE") {
+            JarvisConversationService.sendTextMessage(text)
+        } else {
+            // Standalone Gemini fallback
+            viewLifecycleOwner.lifecycleScope.launch {
+                val response = com.jarvis.assistant.network.GeminiClient.getChatResponse(text)
+                if (response != null) {
+                    repository.updateLastAssistantText(response)
+                } else {
+                    repository.updateLastAssistantText("Nusrat is currently offline or the API key is invalid.")
+                }
+            }
+        }
         binding.etMessageInput.text?.clear()
     }
 

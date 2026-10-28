@@ -124,12 +124,53 @@ class SettingsFragment : Fragment() {
             "custom" -> "Custom (${preferences.customThemeColor})"
             else -> "Light Theme"
         }
+
+        // Subscription Summary
+        val entitlement = com.jarvis.assistant.entitlement.FeatureAccessManager.getCurrentEntitlement()
+        binding.tvSubscriptionStatusSummary.text = "${entitlement.planName} • ${entitlement.subscriptionState.name}"
+
+        // Account & Licensing Visibility
+        binding.rowLoginRegister.visibility = View.GONE
+        binding.dividerLogin.visibility = View.GONE
+        binding.rowLogout.visibility = View.VISIBLE
+        binding.dividerLogout.visibility = View.VISIBLE
+        binding.tvProfileSubtitle.text = "NUSRAT OPERATOR • PRIMARY USER"
     }
 
     private fun setupClickListeners() {
         // Profile Card -> Change Name
         binding.cardProfile.setOnClickListener {
             showEditNameDialog()
+        }
+
+        // Subscription Status
+        binding.rowSubscription.setOnClickListener {
+            startActivity(Intent(requireContext(), SubscriptionStatusActivity::class.java))
+        }
+
+        // Account & Licensing Actions
+        binding.rowLoginRegister.setOnClickListener {
+            startActivity(Intent(requireContext(), com.jarvis.assistant.ui.auth.WelcomeActivity::class.java))
+        }
+
+        binding.rowActivateLicense.setOnClickListener {
+            startActivity(Intent(requireContext(), com.jarvis.assistant.ui.auth.ActivateLicenseActivity::class.java))
+        }
+
+        binding.rowLogout.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Sign Out")
+                .setMessage("Are you sure you want to log out of NUSRAT AI?")
+                .setPositiveButton("Logout") { _, _ ->
+                    JarvisApp.instance.authRepository.logout()
+                    preferences.isSetupCompleted = false // Reset setup to show Welcome screen
+                    val intent = Intent(requireContext(), com.jarvis.assistant.ui.auth.WelcomeActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
 
         // Voice Status Chip on Profile Card -> Opens Voice Enrollment

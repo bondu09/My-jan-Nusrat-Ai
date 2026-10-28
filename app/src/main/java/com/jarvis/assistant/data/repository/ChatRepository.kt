@@ -46,6 +46,17 @@ class ChatRepository(private val preferences: AppPreferences) {
     }
 
     @Synchronized
+    fun updateLastAssistantText(text: String) {
+        val currentList = _turns.value.toMutableList()
+        if (currentList.isNotEmpty()) {
+            val last = currentList.last()
+            currentList[currentList.size - 1] = last.copy(jarvisResponse = text)
+            _turns.value = currentList
+            preferences.saveChatHistory(currentList)
+        }
+    }
+
+    @Synchronized
     fun clearHistory() {
         _turns.value = emptyList()
         preferences.clearChatHistory()

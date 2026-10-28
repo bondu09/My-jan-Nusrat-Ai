@@ -22,9 +22,9 @@ object ThemeManager {
         return when (themeKey) {
             "dark" -> Color.parseColor("#070914")
             "red" -> Color.parseColor("#0E0307")
-            "sunset" -> Color.parseColor("#FFF0EA")
+            "sunset" -> Color.parseColor("#FFFFFF")
             "custom" -> try { Color.parseColor(customHex ?: "#FFFFFF") } catch (_: Exception) { Color.WHITE }
-            else -> Color.parseColor("#EEF2F9")
+            else -> Color.parseColor("#FFFFFF")
         }
     }
 
@@ -35,7 +35,7 @@ object ThemeManager {
         val (themeRes, isLightStatusBar, bgColor) = when (themeKey) {
             "dark" -> Triple(R.style.Theme_JarvisAssistant_Dark, false, Color.parseColor("#070914"))
             "red" -> Triple(R.style.Theme_JarvisAssistant_Red, false, Color.parseColor("#0E0307"))
-            "sunset" -> Triple(R.style.Theme_JarvisAssistant_Sunset, true, Color.parseColor("#FFF0EA"))
+            "sunset" -> Triple(R.style.Theme_JarvisAssistant_Sunset, true, Color.parseColor("#FFFFFF"))
             "custom" -> {
                 val customHex = prefs?.customThemeColor ?: "#FFFFFF"
                 val parsedColor = try { Color.parseColor(customHex) } catch (_: Exception) { Color.WHITE }
@@ -43,7 +43,7 @@ object ThemeManager {
                 val res = if (light) R.style.Theme_JarvisAssistant_CustomLight else R.style.Theme_JarvisAssistant_CustomDark
                 Triple(res, light, parsedColor)
             }
-            else -> Triple(R.style.Theme_JarvisAssistant_Light, true, Color.parseColor("#EEF2F9"))
+            else -> Triple(R.style.Theme_JarvisAssistant_Light, true, Color.parseColor("#FFFFFF"))
         }
 
         activity.setTheme(themeRes)

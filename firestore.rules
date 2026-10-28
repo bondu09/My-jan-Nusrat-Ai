@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // --- Users ---
+    function isValidUser(data) {
+      return data.uid is string && data.uid == request.auth.uid &&
+             data.email is string &&
+             data.displayName is string &&
+             data.subscriptionTier in ['basic', 'pro', 'master'] &&
+             (!('licenseKey' in data) || (data.licenseKey is string && data.licenseKey.size() <= 128)) &&
+             (!('licenseActivatedAt' in data) || data.licenseActivatedAt is timestamp) &&
+             (!('expiresAt' in data) || data.expiresAt is timestamp) &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn() && request.auth.uid == userId &&
+                       isValidUser(incoming()) &&
+                       incoming().createdAt <= request.time;
+      allow update: if isSignedIn() && request.auth.uid == userId &&
+                       isValidUser(incoming()) &&
+                       incoming().uid == existing().uid &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt <= request.time;
+    }
+
+    // --- Licenses ---
+    function isValidLicense(data) {
+      return data.key is string && data.key.size() <= 128 &&
+             data.tier in ['pro', 'master'] &&
+             data.isUsed is bool &&
+             (!('usedBy' in data) || data.usedBy is string) &&
+             (!('usedAt' in data) || data.usedAt is timestamp);
+    }
+
+    match /licenses/{licenseKey} {
+      allow get: if isSignedIn() && isValidId(licenseKey);
+      allow update: if isSignedIn() &&
+                       isValidId(licenseKey) &&
+                       isValidLicense(incoming()) &&
+                       existing().isUsed == false &&
+                       incoming().isUsed == true &&
+                       incoming().usedBy == request.auth.uid &&
+                       incoming().diff(existing()).affectedKeys().hasOnly(['isUsed', 'usedBy', 'usedAt']);
+    }
+
+    // --- Plans ---
+    function isValidPlan(data) {
+      return data.name is string &&
+             data.price is string &&
+             data.features is list &&
+             data.tier is string;
+    }
+
+    match /plans/{planId} {
+      allow read: if true;
+    }
+  }
+}

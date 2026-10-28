@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "703666177803",
+    "firebase_url": "https://ai--server-default-rtdb.firebaseio.com",
+    "project_id": "ai--server",
+    "storage_bucket": "ai--server.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703666177803:android:9aefc87c970ece2ccb840e",
+        "android_client_info": {
+          "package_name": "com.nusrat.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703666177803-1aepfni6rhafqema0jscukqlk99hh1mv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBozt1-Gv4C9AI6UQFZeNtNxwVMmo_4fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703666177803-1aepfni6rhafqema0jscukqlk99hh1mv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

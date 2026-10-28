@@ -142,6 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        com.jarvis.assistant.util.configureAppCheck(this, intent)
         com.jarvis.assistant.util.ThemeManager.applyTheme(this)
         val prefs = com.jarvis.assistant.JarvisApp.instance.preferences
         appliedThemeKey = prefs.appTheme
@@ -246,6 +247,22 @@ class MainActivity : AppCompatActivity() {
 
     fun selectTab(tab: Int) {
         val previousTab = currentTab
+        
+        // Feature Gating
+        if (tab == TAB_UPDATES) {
+            if (!com.jarvis.assistant.entitlement.FeatureAccessManager.hasFeatureAccess("premium_updates")) {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle("Premium Feature")
+                    .setMessage("The Updates & Community feed is available for NUSRAT AI Master Pro subscribers. Upgrade now to unlock.")
+                    .setPositiveButton("View Plans") { _, _ ->
+                        startActivity(Intent(this, com.jarvis.assistant.ui.settings.SubscriptionStatusActivity::class.java))
+                    }
+                    .setNegativeButton("Maybe Later", null)
+                    .show()
+                return
+            }
+        }
+
         currentTab = tab
 
         val tabs = listOf(

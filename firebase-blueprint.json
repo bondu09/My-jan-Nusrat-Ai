@@ -1,0 +1,49 @@
+{
+  "collections": {
+    "users": {
+      "description": "User profiles and subscription data",
+      "documents": {
+        "{userId}": {
+          "fields": {
+            "uid": { "type": "string", "description": "Firebase Auth UID" },
+            "email": { "type": "string" },
+            "displayName": { "type": "string" },
+            "subscriptionTier": { "type": "string", "description": "basic, pro, master" },
+            "licenseKey": { "type": "string", "optional": true },
+            "licenseActivatedAt": { "type": "timestamp", "optional": true },
+            "expiresAt": { "type": "timestamp", "optional": true },
+            "createdAt": { "type": "timestamp" },
+            "updatedAt": { "type": "timestamp" }
+          }
+        }
+      }
+    },
+    "licenses": {
+      "description": "Available license keys for activation",
+      "documents": {
+        "{licenseKey}": {
+          "fields": {
+            "key": { "type": "string" },
+            "tier": { "type": "string" },
+            "isUsed": { "type": "boolean" },
+            "usedBy": { "type": "string", "optional": true },
+            "usedAt": { "type": "timestamp", "optional": true }
+          }
+        }
+      }
+    },
+    "plans": {
+      "description": "Available subscription plans",
+      "documents": {
+        "{planId}": {
+          "fields": {
+            "name": { "type": "string" },
+            "price": { "type": "string" },
+            "features": { "type": "array", "items": { "type": "string" } },
+            "tier": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

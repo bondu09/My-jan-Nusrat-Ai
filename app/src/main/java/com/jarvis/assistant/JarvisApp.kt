@@ -19,6 +19,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class JarvisApp : Application() {
 
@@ -57,11 +58,22 @@ class JarvisApp : Application() {
     lateinit var commandExecutor: CommandExecutor
         private set
 
+    lateinit var authRepository: com.jarvis.assistant.auth.AuthRepository
+        private set
+
+    lateinit var entitlementRepository: com.jarvis.assistant.entitlement.EntitlementRepository
+        private set
+
     override fun onCreate() {
         super.onCreate()
         instance = this
+        try {
+            com.google.firebase.FirebaseApp.initializeApp(this)
+        } catch (_: Throwable) {}
         preferences = AppPreferences(this)
         chatRepository = ChatRepository(preferences)
+        authRepository = com.jarvis.assistant.auth.AuthRepository(this)
+        entitlementRepository = com.jarvis.assistant.entitlement.EntitlementRepository(this)
 
         // Memory System
         memoryDatabase = MemoryDatabase.getInstance(this)
@@ -84,6 +96,16 @@ class JarvisApp : Application() {
         )
 
         VoskModelManager.init(this, CoroutineScope(Dispatchers.Default))
+
+        // Entitlement Refresh on Startup
+        try {
+            val user = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+            if (user != null) {
+                appScope.launch {
+                    com.jarvis.assistant.entitlement.FeatureAccessManager.refreshEntitlement(user.uid, user.email ?: "")
+                }
+            }
+        } catch (_: Throwable) {}
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             private var startedActivities = 0
